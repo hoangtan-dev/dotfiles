@@ -229,3 +229,13 @@ bind -x '"\C-g":fcd' # Ctrl+G binding
 # Alias
 alias emulator="$ANDROID_HOME/emulator/emulator"
 eval "$(uv generate-shell-completion bash)"
+
+sesh_sessions() {
+  local session
+  session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+  [[ -z "$session" ]] && return
+  sesh connect "$session"
+}
+
+# Bind Alt+S to run sesh_sessions
+bind -x '"\es":sesh_sessions'
