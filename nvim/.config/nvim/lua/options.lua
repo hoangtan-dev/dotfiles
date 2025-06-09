@@ -64,3 +64,6 @@ vim.opt.scrolloff = 10
 
 -- Warp
 vim.opt.wrap = false
+
+-- Global statusline
+vim.opt.laststatus = 3
