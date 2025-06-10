@@ -1,3 +1,29 @@
+---@param items any[]
+---@param length number
+---@param element any
+---@param config HarpoonPartialConfigItem?
+local function index_of(
+  items,
+  length,
+  element,
+  config
+)
+  local equals = config
+      and config.equals
+    or function(a, b)
+      return a == b
+    end
+
+  for i = 1, length do
+    local item = items[i]
+    if equals(element, item) then
+      return i
+    end
+  end
+
+  return -1
+end
+
 return {
   'ThePrimeagen/harpoon',
   branch = 'harpoon2',
@@ -15,16 +41,26 @@ return {
       'n',
       '<C-a>',
       function()
-        harpoon:list():add()
+        local list = harpoon:list()
+        local item =
+          list.config.create_list_item(
+            list.config
+          )
+
+        local index = index_of(
+          list.items,
+          list._length,
+          item,
+          list.config
+        )
+        if index ~= -1 then
+          list:remove(item)
+        else
+          list:add(item)
+        end
       end
     )
-    vim.keymap.set(
-      'n',
-      '<C-A>',
-      function()
-        harpoon:list():remove()
-      end
-    )
+
     vim.keymap.set(
       'n',
       '<C-e>',
