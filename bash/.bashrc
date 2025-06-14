@@ -187,6 +187,7 @@ export PATH="$PATH:$ANDROID_HOME/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/build-tools"
 export PATH="$PATH:/home/deval/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -239,3 +240,4 @@ sesh_sessions() {
 
 # Bind Alt+S to run sesh_sessions
 bind -x '"\es":sesh_sessions'
+unalias gg
