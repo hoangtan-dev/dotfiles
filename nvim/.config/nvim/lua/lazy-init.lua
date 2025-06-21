@@ -51,6 +51,12 @@ require('lazy').setup({
       import = 'plugins.editor.gitsigns',
     },
     {
+      import = 'plugins.git.git-worktree',
+    },
+    {
+      import = 'plugins.editor.telescope',
+    },
+    {
       import = 'plugins.editor.grug-far',
     },
     {
@@ -83,9 +89,9 @@ require('lazy').setup({
       import = 'plugins.editor.snacks',
     },
     { import = 'plugins.editor.tmux' },
-    {
-      import = 'plugins.editor.which-key',
-    },
+    -- {
+    --   import = 'plugins.editor.which-key',
+    -- },
     {
       import = 'plugins.formatting.conform',
     },

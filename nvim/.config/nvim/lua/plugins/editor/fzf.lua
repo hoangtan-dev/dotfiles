@@ -79,18 +79,133 @@ return {
     dependencies = {
       'echasnovski/mini.icons',
     },
-    opts = {
-      grep = {
-        rg_opts = '--column --line-number --hidden '
-          .. "--glob '!.git/*' "
-          .. "--glob '!node_modules/*' "
-          .. "--glob '!.env/*' "
-          .. "--glob '!.mypy_cache/*' "
-          .. "--glob '!.dockerignore' "
-          .. "--glob '!.db_backups/*' "
-          .. "--glob '!__pycache__/*' ",
-      },
-    },
+    opts = function(_, opts)
+      opts.keymap = {
+        builtin = {
+          true,
+          ['<Esc>'] = 'hide',
+        },
+      }
+
+      opts.hls = {
+        cursorline = 'CursorLine',
+        cursorlinenr = 'CursorLineNr',
+      }
+
+      opts.defaults = {
+        formatter = 'path.filename_first',
+      }
+
+      opts.fzf_colors = {
+        ['gutter'] = '-1',
+        fzf_colors = {
+          true, -- inherit fzf colors that aren't specified below from
+          -- the auto-generated theme similar to `fzf_colors=true`
+          ['fg'] = {
+            'fg',
+            'CursorLine',
+          },
+          ['bg'] = { 'bg', 'Normal' },
+          ['hl'] = { 'fg', 'Comment' },
+          ['fg+'] = {
+            'fg',
+            'Normal',
+            'underline',
+          },
+          ['bg+'] = {
+            'bg',
+            { 'CursorLine', 'Normal' },
+          },
+          ['hl+'] = {
+            'fg',
+            'Statement',
+          },
+          ['info'] = { 'fg', 'PreProc' },
+          ['prompt'] = {
+            'fg',
+            'Conditional',
+          },
+          ['pointer'] = {
+            'fg',
+            'Exception',
+          },
+          ['marker'] = {
+            'fg',
+            'Keyword',
+          },
+          ['spinner'] = {
+            'fg',
+            'Label',
+          },
+          ['header'] = {
+            'fg',
+            'Comment',
+          },
+        },
+      }
+
+      opts.grep = vim.tbl_deep_extend(
+        'force',
+        opts.grep or {},
+        {
+          rg_opts = '--column --line-number --hidden '
+            .. "--glob '!.git/*' "
+            .. "--glob '!node_modules/*' "
+            .. "--glob '!.env/*' "
+            .. "--glob '!.mypy_cache/*' "
+            .. "--glob '!.dockerignore' "
+            .. "--glob '!.db_backups/*' "
+            .. "--glob '!__pycache__/*' ",
+          actions = {
+            ['ctrl-i'] = require(
+              'fzf-lua.actions'
+            ).toggle_ignore,
+            ['ctrl-h'] = require(
+              'fzf-lua.actions'
+            ).toggle_hidden,
+            ['enter'] = {
+              fn = function(sel, o)
+                require('fzf-lua').hide()
+                require(
+                  'fzf-lua.actions'
+                ).file_edit_or_qf(
+                  sel,
+                  o
+                )
+              end,
+              exec_silent = true,
+            },
+          },
+        }
+      )
+
+      opts.files = vim.tbl_deep_extend(
+        'force',
+        opts.files or {},
+        {
+          actions = {
+            ['ctrl-i'] = require(
+              'fzf-lua.actions'
+            ).toggle_ignore,
+            ['ctrl-h'] = require(
+              'fzf-lua.actions'
+            ).toggle_hidden,
+            ['enter'] = {
+              fn = function(sel, o)
+                require('fzf-lua').hide()
+                require(
+                  'fzf-lua.actions'
+                ).file_edit_or_qf(
+                  sel,
+                  o
+                )
+              end,
+              exec_silent = true,
+            },
+          },
+        }
+      )
+    end,
     keys = {
       {
         '<c-j>',
@@ -106,22 +221,11 @@ return {
         mode = 't',
         nowait = true,
       },
-      {
-        '<leader>,',
-        '<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>',
-        desc = 'Switch Buffer',
-      },
-
       -- find
       {
         '<leader>fb',
         '<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>',
         desc = 'Buffers',
-      },
-      {
-        '<leader>ff',
-        '<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>',
-        desc = 'Files',
       },
       {
         '<leader><space>',
@@ -151,14 +255,9 @@ return {
         desc = 'Buffer',
       },
       {
-        '<leader>sc',
+        '<leader>sC',
         '<cmd>FzfLua command_history<cr>',
         desc = 'Command History',
-      },
-      {
-        '<leader>sC',
-        '<cmd>FzfLua commands<cr>',
-        desc = 'Commands',
       },
       {
         '<leader>sd',
@@ -211,7 +310,7 @@ return {
         desc = 'Jump to Mark',
       },
       {
-        '<leader>sR',
+        '<leader>,',
         '<cmd>FzfLua resume<cr>',
         desc = 'Resume',
       },
@@ -221,7 +320,7 @@ return {
         desc = 'Quickfix List',
       },
       {
-        '<leader>ss',
+        '<leader>sS',
         function()
           require('fzf-lua').lsp_document_symbols {
             regex_filter = symbols_filter,
@@ -230,13 +329,28 @@ return {
         desc = 'Symbol (Document)',
       },
       {
-        '<leader>sS',
+        '<leader>ss',
         function()
           require('fzf-lua').lsp_live_workspace_symbols {
             regex_filter = symbols_filter,
           }
         end,
         desc = 'Symbol (Workspace)',
+      },
+      {
+        '<leader>d<space>',
+        function()
+          require('fzf-lua').files {
+            cmd = 'fd -t=d',
+            cwd = require('oil').get_current_dir(),
+          }
+        end,
+        desc = 'FzfLua(Oil)',
+      },
+      {
+        '<leader>ff',
+        '<cmd>FzfLua git_status<cr>',
+        desc = 'Git Files Changed',
       },
     },
   },

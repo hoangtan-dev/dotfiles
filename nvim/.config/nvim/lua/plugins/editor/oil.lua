@@ -13,6 +13,7 @@ return {
     -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
     -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
     lazy = false,
+    priority = 1000,
     config = function()
       CustomOilBar = function()
         local path = vim.fn.expand '%'
@@ -38,7 +39,7 @@ return {
         },
         win_options = {
           winbar = '%{v:lua.CustomOilBar()}',
-          signcolumn = "yes:2",
+          signcolumn = 'yes:2',
         },
         view_options = {
           show_hidden = true,
