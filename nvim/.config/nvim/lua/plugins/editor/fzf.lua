@@ -260,12 +260,12 @@ return {
         desc = 'Command History',
       },
       {
-        '<leader>sd',
+        '<leader>sl',
         '<cmd>FzfLua diagnostics_document<cr>',
         desc = 'Document Diagnostics',
       },
       {
-        '<leader>sD',
+        '<leader>sL',
         '<cmd>FzfLua diagnostics_workspace<cr>',
         desc = 'Workspace Diagnostics',
       },
@@ -295,16 +295,6 @@ return {
         desc = 'Key Maps',
       },
       {
-        '<leader>sl',
-        '<cmd>FzfLua loclist<cr>',
-        desc = 'Location List',
-      },
-      {
-        '<leader>sM',
-        '<cmd>FzfLua man_pages<cr>',
-        desc = 'Man Pages',
-      },
-      {
         '<leader>sm',
         '<cmd>FzfLua marks<cr>',
         desc = 'Jump to Mark',
@@ -320,7 +310,7 @@ return {
         desc = 'Quickfix List',
       },
       {
-        '<leader>sS',
+        '<leader>sd',
         function()
           require('fzf-lua').lsp_document_symbols {
             regex_filter = symbols_filter,

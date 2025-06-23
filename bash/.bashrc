@@ -175,7 +175,6 @@ gclone() {
   fi
 }
 bind 'set bell-style none'
-eval "$(zoxide init --cmd cd bash)"
 neofetch
 
 # Created by `pipx` on 2025-02-13 17:41:43
@@ -193,39 +192,12 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
 
-fcd() {
-  local dir
-  dir=$(find . \( \
-    -name ".git" -o \
-    -name ".dotnet" -o \
-    -name "debug" -o \
-    -name "bin" -o \
-    -name "obj" -o \
-    -name ".idea" -o \
-    -name ".fleet" -o \
-    -name "node_modules" -o \
-    -name "volumes" -o \
-    -name ".terraform" -o \
-    -name "Library" -o \
-    -name "Pictures" -o \
-    -name "Documents" -o \
-    -name ".local" -o \
-    -name ".nuget" -o \
-    -name ".npm" -o \
-    -name ".vscode" -o \
-    -name ".rustup" -o \
-    -name ".cargo" -o \
-    -name ".quokka" -o \
-    -name ".vscode-insiders" \
-    \) -prune -false -o -type d -print | fzf)
+eval "$(fzf --bash)"
 
-  if [[ -n "$dir" ]]; then
-    cd "$dir" || return
-    echo -e "\n➡️  Now in: \033[1;32m$PWD\033[0m"
-  fi
-}
-
-bind -x '"\C-g":fcd' # Ctrl+G binding
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target,.env,.venv
+  --preview 'tree -C {}'"
 
 # Alias
 alias emulator="$ANDROID_HOME/emulator/emulator"
