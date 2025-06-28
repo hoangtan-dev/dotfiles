@@ -96,6 +96,9 @@ require('lazy').setup({
       import = 'plugins.formatting.conform',
     },
     {
+      import = 'plugins.formatting.prettier',
+    },
+    {
       import = 'plugins.languages.astro',
     },
     {
@@ -110,6 +113,9 @@ require('lazy').setup({
     },
     {
       import = 'plugins.languages.python',
+    },
+    {
+      import = 'plugins.languages.tex',
     },
     {
       import = 'plugins.languages.tailwind',

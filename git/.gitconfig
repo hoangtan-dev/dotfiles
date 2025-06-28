@@ -1,17 +1,8 @@
 [user]
-	name = Tan Nguyen
-	email = ext.tan.nguyen@truedigital.com
-	email = vinhnguyen@b13technology.com
-	name = Vinh Nguyen
-	name = Tan Nguyen
-	email = ext.tan.nguyen@truedigital.com
-	email = vinhnguyen@b13technology.com
-	name = Vinh Nguyen
-	email = ext.tan.nguyen@truedigital.com
-	name = Tan Nguyen
-	signingkey = /home/deval/.ssh/id_ed25519.pub
+	name = Nguyễn Hoàng Tân
+	email = devaligator1004@gmail.com
 [init]
-	defaultBranch = master
+	defaultBranch = main
 [credential]
 	helper = store
 [core]

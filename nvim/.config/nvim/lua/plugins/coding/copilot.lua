@@ -8,8 +8,6 @@ return {
         enabled = true,
         auto_refresh = false,
         keymap = {
-          jump_prev = '[[',
-          jump_next = ']]',
           accept = '<CR>',
           refresh = 'gr',
           open = '<M-CR>',
