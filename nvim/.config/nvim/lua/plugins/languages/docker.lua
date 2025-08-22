@@ -1,12 +1,16 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    opts = { ensure_installed = { 'dockerfile' } },
+    opts = {
+      ensure_installed = {
+        'dockerfile',
+      },
+    },
   },
-  {
-    'mason.nvim',
-    opts = { ensure_installed = { 'hadolint' } },
-  },
+  -- {
+  --   'mason.nvim',
+  --   opts = { ensure_installed = { 'hadolint' } },
+  -- },
   {
     'neovim/nvim-lspconfig',
     opts = {

@@ -107,6 +107,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim=nvim
+alias ls=lsd
 alias emulator=/Users/deval/Library/Android/sdk/emulator/emulator
 eval "$(zoxide init --cmd cd zsh)"
 clear
@@ -114,7 +115,8 @@ export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
 export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export ANDROID_HOME="/Users/deval/Library/Android/sdk"
-export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/jdk-24.jdk/Contents/Home'
+export PATH="/Users/tannh/.local/bin:$PATH"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$ANDROID_HOME/bin:$PATH"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
@@ -175,4 +177,10 @@ zle     -N             sesh-sessions
 bindkey -M emacs '\es' sesh-sessions
 bindkey -M vicmd '\es' sesh-sessions
 bindkey -M viins '\es' sesh-sessions
+
+# Load secrets
+if [ -f ~/.zsh_secrets ]; then
+  source ~/.zsh_secrets
+fi
+
 

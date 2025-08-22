@@ -303,7 +303,7 @@ return {
           'docker-compose-language-service',
           'dockerfile-language-server',
           'eslint-lsp',
-          'hadolint',
+          -- 'hadolint',
           'js-debug-adapter',
           'neocmakelsp',
           'prettier',

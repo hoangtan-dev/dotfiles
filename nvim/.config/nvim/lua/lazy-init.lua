@@ -42,6 +42,9 @@ require('lazy').setup({
     {
       import = 'plugins.coding.trouble',
     },
+    {
+      import = 'plugins.coding.octocode',
+    },
     -- {
     --   import = 'plugins.coding.smear-cursor',
     -- },
