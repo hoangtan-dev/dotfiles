@@ -149,31 +149,6 @@ alias vpn-cli='protonvpn-cli'
 alias docker-compose='docker compose -f compose/stack.yml'
 alias netstat-check='sudo netstat -lptuln'
 
-# Alias to start Elasticsearch container
-alias start-elasticsearch='docker run -p 127.0.0.1:9200:9200 -d --name elasticsearch --network elastic-net \
-  -e ELASTIC_PASSWORD=$ELASTIC_PASSWORD \
-  -e "discovery.type=single-node" \
-  -e "xpack.security.http.ssl.enabled=false" \
-  -e "xpack.license.self_generated.type=trial" \
-  docker.elastic.co/elasticsearch/elasticsearch:8.15.0'
-
-# Alias to start Kibana container
-alias start-kibana='docker run -p 127.0.0.1:5601:5601 -d --name kibana --network elastic-net \
-  -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
-  -e ELASTICSEARCH_HOSTS=http://elasticsearch:9200 \
-  -e ELASTICSEARCH_USERNAME=kibana_system \
-  -e ELASTICSEARCH_PASSWORD=$KIBANA_PASSWORD \
-  -e "xpack.security.enabled=false" \
-  -e "xpack.license.self_generated.type=trial" \
-  docker.elastic.co/kibana/kibana:8.15.0'
-
-gclone() {
-  if [ $# -eq 0 ]; then
-    echo "Usage: gclone <repo_name>"
-  else
-    git clone "https://github.com/$1.git"
-  fi
-}
 bind 'set bell-style none'
 neofetch
 
@@ -203,6 +178,9 @@ export FZF_ALT_C_OPTS="
 alias emulator="$ANDROID_HOME/emulator/emulator"
 eval "$(uv generate-shell-completion bash)"
 
+# Zoxide
+eval "$(zoxide init bash --cmd cd)"
+
 sesh_sessions() {
   local session
   session=$(sesh list -t -c | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
@@ -213,3 +191,7 @@ sesh_sessions() {
 # Bind Alt+S to run sesh_sessions
 bind -x '"\es":sesh_sessions'
 unalias gg
+. "$HOME/.cargo/env"
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
