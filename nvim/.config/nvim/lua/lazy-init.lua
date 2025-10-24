@@ -128,6 +128,7 @@ require('lazy').setup({
     },
     { import = 'plugins.linting.core' },
     { import = 'plugins.test.core' },
+    { import = 'plugins.test.kulala' },
     {
       import = 'plugins.ui.colorscheme',
     },
