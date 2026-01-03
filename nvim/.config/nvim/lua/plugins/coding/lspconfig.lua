@@ -309,7 +309,6 @@ return {
           'prettier',
           'prettierd',
           'pylint',
-          'pyright',
           'ruff',
           'ruff-lsp',
           'stylua',

@@ -1,4 +1,4 @@
-local lsp = 'pyright'
+local lsp = 'ty'
 local ruff = 'ruff'
 
 return {
@@ -102,7 +102,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = function(_, opts)
       local servers = {
-        'pyright',
+        'ty',
         'ruff',
         'ruff_lsp',
         ruff,
