@@ -55,6 +55,8 @@ config.window_padding = {
   bottom = 0,
 }
 config.macos_window_background_blur = 40
+config.window_decorations = 'RESIZE'
+config.native_macos_fullscreen_mode = true
 
 -- Miscellaneous settings
 config.max_fps = 120
@@ -62,6 +64,12 @@ config.prefer_egl = true
 
 -- Wayland support
 config.enable_wayland = false
+
+-- Keybindings
+config.keys = {
+  -- MacOS: Toggle Full Screen
+  { key = 'f', mods = 'CTRL|CMD', action = wezterm.action.ToggleFullScreen },
+}
 
 -- Custom commands
 wezterm.on('augment-command-palette', function()

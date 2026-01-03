@@ -77,6 +77,9 @@ require('lazy').setup({
       import = 'plugins.editor.oil',
     },
     {
+      import = 'plugins.editor.leetcode',
+    },
+    {
       import = 'plugins.navigation.harpoon',
     },
     {

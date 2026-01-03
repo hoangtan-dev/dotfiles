@@ -184,3 +184,6 @@ if [ -f ~/.zsh_secrets ]; then
 fi
 
 
+
+# opencode
+export PATH=/Users/tannh/.opencode/bin:$PATH
