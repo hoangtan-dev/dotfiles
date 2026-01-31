@@ -50,11 +50,38 @@ config.bind("<ctrl+j>", "completion-item-focus next", "command")
 config.bind("<ctrl+k>", "completion-item-focus prev", "command")
 config.bind("<space><space>", "cmd-set-text -s :tab-select")
 
+# Readline-like bindings in insert mode
+config.bind('<Ctrl-h>', 'fake-key <Backspace>', 'insert')
+config.bind('<Ctrl-a>', 'fake-key <Home>', 'insert')
+config.bind('<Ctrl-e>', 'fake-key <End>', 'insert')
+config.bind('<Ctrl-b>', 'fake-key <Left>', 'insert')
+config.bind('<Mod1-b>', 'fake-key <Ctrl-Left>', 'insert')
+config.bind('<Ctrl-f>', 'fake-key <Right>', 'insert')
+config.bind('<Mod1-f>', 'fake-key <Ctrl-Right>', 'insert')
+config.bind('<Ctrl-p>', 'fake-key <Up>', 'insert')
+config.bind('<Ctrl-n>', 'fake-key <Down>', 'insert')
+config.bind('<Mod1-d>', 'fake-key <Ctrl-Delete>', 'insert')
+config.bind('<Ctrl-d>', 'fake-key <Delete>', 'insert')
+config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', 'insert')
+config.bind('<Ctrl-u>', 'fake-key <Shift-Home><Delete>', 'insert')
+config.bind('<Ctrl-k>', 'fake-key <Shift-End><Delete>', 'insert')
+config.bind('<Ctrl-x><Ctrl-e>', 'open-editor', 'insert')
+
+# Userscript bindings
+config.bind("<space>l", "spawn --userscript localhost")
+config.bind("<space>d", "spawn --userscript dmenu-qutebrowser tab")
+
+# Disable passthrough mode
+config.bind("<Ctrl-v>", "nop")
+
 # dark mode setup
 c.colors.webpage.darkmode.enabled = True
 c.colors.webpage.darkmode.algorithm = "lightness-cielab"
 c.colors.webpage.darkmode.policy.images = "never"
 config.set("colors.webpage.darkmode.enabled", False, "file://*")
+
+# Remove Titlebar (MacOS)
+config.set("window.hide_decoration", True)
 
 # styles, cosmetics
 c.tabs.padding = {"top": 5, "bottom": 5, "left": 9, "right": 9}

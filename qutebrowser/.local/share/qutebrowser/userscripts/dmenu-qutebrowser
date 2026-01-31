@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+# qutebrowser fuzzel launcher
+
+get_domain_icon() {
+    local url="$1"
+    case "$url" in
+        # Development platforms
+        *github.com*) echo "󰊤" ;;
+        *gitlab.com*) echo "" ;;
+        *bitbucket.org*) echo "" ;;
+        *git*) echo "󰊢" ;;
+        *stackoverflow.com*|*stackexchange.com*) echo "󰓌" ;;
+
+        *teams.microsoft.com*) echo "󰊻" ;;
+        *jira*|*atlassian.net*) echo "" ;;
+
+        *google.com*|*duckduckgo.com*) echo "" ;;
+        *gmail.com*|*outlook*) echo "󰊫" ;;
+        *drive.google.com*) echo "" ;;
+
+        *youtube.com*|*youtu.be*) echo "" ;;
+
+        *reddit.com*) echo "" ;;
+        *linkedin.com*) echo "" ;;
+
+        *archlinux.org*) echo "" ;;
+        *localhost*|*127.0.0.1*|*::1*) echo "󰟑" ;;
+
+        # Files
+        *file://*) echo "󰈙" ;;
+
+        *) echo "" ;;
+    esac
+}
+
+
+create_menu() {
+    # Quickmarks with icons
+    [ -f "$QUTE_CONFIG_DIR/quickmarks" ] &&
+    while read -r url; do
+        icon=$(get_domain_icon "$url")
+        printf '%s  %s\n' "$icon" "$url"
+    done < "$QUTE_CONFIG_DIR/quickmarks"
+
+    # Bookmarks with icons
+    [ -f "$QUTE_CONFIG_DIR/bookmarks/urls" ] &&
+    while read -r url _; do
+        icon=$(get_domain_icon "$url")
+        printf '%s  %s\n' "$icon" "$url"
+    done < "$QUTE_CONFIG_DIR/bookmarks/urls"
+
+    # # History with icons and titles
+    sqlite3 -separator $'\t' "$QUTE_DATA_DIR/history.sqlite" \
+      'select title, url from CompletionHistory order by last_atime desc' |
+    while IFS=$'\t' read -r title url; do
+        icon=$(get_domain_icon "$url")
+        printf '%s  %s │ %s\n' "$icon" "$title" "$url"
+    done
+}
+
+get_selection() {
+    # Detect OS and use appropriate menu tool
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        create_menu | /opt/homebrew/bin/choose -e \
+            -f "DankMono Nerd Font" \
+            -s 24 \
+            -n 12 \
+            -w 80 \
+            -c "89b4fa" \
+            -b "1e1e2e" \
+            -p "qutebrowser> "
+    else
+        # Linux/other systems using fuzzel
+        create_menu | fuzzel \
+            --dmenu \
+            --lines=18 \
+            --width=80 \
+            --horizontal-pad=16 \
+            --vertical-pad=12 \
+            --inner-pad=4 \
+            --border-width=2 \
+            --border-radius=12 \
+            --background-color="1e1e2eff" \
+            --text-color="cdd6f4ff" \
+            --prompt-color="89b4faff" \
+            --input-color="cdd6f4ff" \
+            --match-color="f38ba8ff" \
+            --selection-color="585b70ff" \
+            --selection-text-color="cdd6f4ff" \
+            --selection-match-color="f9e2afff" \
+            --border-color="89b4faff" \
+            --prompt="qutebrowser> " \
+            --placeholder="Search bookmarks, quickmarks, and history..."
+    fi
+}
+
+url=$(get_selection)
+# Extract URL from the selection (handles entries with icons and titles)
+url=$(echo "$url" | grep -o 'https\?://[^ ]*$' || echo "$url" | sed 's/.*│ //' || echo "$url" | sed 's/^[^ ]*  //')
+
+[ -z "$url" ] && exit 0
+
+case "$1" in
+    open)    printf 'open %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url" ;;
+    tab)     printf 'open -t %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url" ;;
+    window)  printf 'open -w %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url" --target window ;;
+    private) printf 'open -p %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url --target private-window" ;;
