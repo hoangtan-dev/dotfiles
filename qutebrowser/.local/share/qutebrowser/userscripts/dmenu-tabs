@@ -1,0 +1,186 @@
+#!/usr/bin/env bash
+# qutebrowser tab switcher
+
+set -euo pipefail
+
+ACTION="${1:-switch}"
+QUTE_FIFO="${QUTE_FIFO:?QUTE_FIFO not set}"
+
+# Create temporary file with cross-platform compatibility
+if mktemp --help 2>&1 | grep -q -- '--suffix'; then
+    # GNU mktemp (Linux)
+    tmp_session="$(mktemp --suffix=.yml)"
+else
+    # BSD mktemp (macOS)
+    tmp_session="$(mktemp -t dmenu-tabs).yml"
+fi
+trap 'rm -f "$tmp_session"' EXIT INT TERM
+
+# Save current session
+echo "session-save $tmp_session --quiet --no-history" >> "$QUTE_FIFO"
+sleep 0.1
+
+get_domain_icon() {
+    local url="$1"
+    case "$url" in
+        # Development platforms
+        *github.com*) echo "󰊤" ;;
+        *gitlab.com*) echo "" ;;
+        *bitbucket.org*) echo "" ;;
+        *git*) echo "󰊢" ;;
+        *stackoverflow.com*|*stackexchange.com*) echo "󰓌" ;;
+
+        *teams.microsoft.com*) echo "󰊻" ;;
+        *jira*|*atlassian.net*) echo "" ;;
+
+        *google.com*|*duckduckgo.com*) echo "" ;;
+        *gmail.com*|*outlook*) echo "󰊫" ;;
+        *drive.google.com*) echo "" ;;
+
+        *youtube.com*|*youtu.be*) echo "" ;;
+
+        *reddit.com*) echo "" ;;
+        *linkedin.com*) echo "" ;;
+
+        *archlinux.org*) echo "" ;;
+        *localhost*|*127.0.0.1*|*::1*) echo "󰟑" ;;
+
+        *chatgpt.com*) echo "󰚩" ;;
+
+        # Files
+        *file://*) echo "󰈙" ;;
+
+        *) echo "" ;;
+    esac
+}
+
+# Extract all history entries (including inactive ones) from all tabs in active window only
+tabs=$(
+awk '
+BEGIN { window_num=0; tab_index=0; global_tab_index=0; in_active_window=0 }
+/^windows:/ { in_windows=1 }
+/^- / && in_windows && !/^- active:/ { 
+    window_num++
+    tab_index=0
+    in_tabs=0 
+    in_active_window=0
+}
+/^- active: true/ && in_windows { in_active_window=1 }
+/^  tabs:/ && in_windows && in_active_window { in_tabs=1 }
+/^  - / && in_tabs && in_active_window { 
+    in_history=0
+    tab_index++
+    global_tab_index++
+    collecting_tab=1
+}
+/^  - history:/ && in_tabs && in_active_window { in_history=1 }
+/^    history:/ && in_tabs && in_active_window { in_history=1 }
+/^    - / && in_history && collecting_tab { 
+    # Process any previous entry
+    if (url != "" && title != "" && !in_title) {
+        print url "|" title
+    }
+    # Start new history entry
+    url=""; title=""; in_title=0
+}
+/^      url:/ && in_history && collecting_tab { gsub(/^      url: /,""); url=$0 }
+/^      title:/ && in_history && collecting_tab {
+    if (match($0, /^      title: '"'"'/)) {
+        gsub(/^      title: '"'"'/,""); title=$0; in_title=1
+        if (match($0, /.*'"'"'$/)) { gsub(/'"'"'$/,""); title=$0; in_title=0 }
+    } else { gsub(/^      title: /,""); title=$0; in_title=0 }
+}
+in_title && /^        / { 
+    gsub(/^        /,""); title=title " " $0
+    if (match($0, /.*'"'"'$/)) { gsub(/'"'"'$/,"",title); in_title=0 }
+}
+(/^      zoom:/ || /^  - / || /^- /) && collecting_tab && url != "" && title != "" && !in_title {
+    print url "|" title
+    url=""; title=""; in_title=0
+    if (/^  - / || /^- /) { collecting_tab=0 }
+}
+END {
+    if (collecting_tab && url != "" && title != "" && !in_title) {
+        print url "|" title
+    }
+}
+' "$tmp_session"
+)
+
+# Fallback
+if [[ -z "$tabs" ]]; then
+    tabs="${QUTE_URL:-about:blank}|${QUTE_TITLE:-Current Tab}"
+fi
+
+create_menu() {
+    # Build tab menu with icons
+    local i=1
+    while IFS='|' read -r url title; do
+        local icon="$(get_domain_icon "$url")"
+        printf "%2d %s  %.60s │ %s\n" "$i" "$icon" "$title" "$url"
+        ((i++))
+    done <<< "$tabs"
+}
+
+get_selection() {
+    # Detect OS and use appropriate menu tool
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        create_menu | /opt/homebrew/bin/choose -e \
+            -f "DankMono Nerd Font" \
+            -s 24 \
+            -n 12 \
+            -w 80 \
+            -c "89b4fa" \
+            -b "1e1e2e" \
+            -p "🗂️ Tabs> "
+    else
+        # Linux/other systems using fuzzel
+        create_menu | fuzzel \
+            --dmenu \
+            --lines=18 \
+            --width=80 \
+            --horizontal-pad=16 \
+            --vertical-pad=12 \
+            --inner-pad=4 \
+            --border-width=2 \
+            --border-radius=12 \
+            --prompt="🗂️ Tabs> " \
+            --placeholder="Switch, close, or clone any tab..." \
+            --font='DankMono Nerd Font:size=18'
+    fi
+}
+
+choice="$(get_selection || true)"
+
+[[ -z "$choice" ]] && {
+    rm -f "$tmp_session"
+    exit 0
+}
+
+index="$(awk '{print $1}' <<< "$choice")"
+
+case "$ACTION" in
+    switch)
+        echo "tab-focus $index" >> "$QUTE_FIFO"
+        ;;
+    close)
+        echo "tab-close --index $index" >> "$QUTE_FIFO"
+        ;;
+    clone)
+        url="$(echo "$choice" | grep -o 'https\?://[^ ]*$' || echo "$choice" | sed 's/.*│ //')"
+        echo "open -t $url" >> "$QUTE_FIFO"
+        ;;
+    move-left)
+        echo "tab-move -" >> "$QUTE_FIFO"
+        ;;
+    move-right)
+        echo "tab-move +" >> "$QUTE_FIFO"
+        ;;
+    *)
+        echo "tab-focus $index" >> "$QUTE_FIFO"
+        ;;
+esac
+
+# Clean up temporary session file
+rm -f "$tmp_session"
+

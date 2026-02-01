@@ -26,6 +26,8 @@ get_domain_icon() {
         *archlinux.org*) echo "" ;;
         *localhost*|*127.0.0.1*|*::1*) echo "󰟑" ;;
 
+        *chatgpt.com*) echo "󰚩" ;;
+
         # Files
         *file://*) echo "󰈙" ;;
 
@@ -105,3 +107,4 @@ case "$1" in
     tab)     printf 'open -t %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url" ;;
     window)  printf 'open -w %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url" --target window ;;
     private) printf 'open -p %s' "$url" >> "$QUTE_FIFO" || qutebrowser "$url --target private-window" ;;
+esac
