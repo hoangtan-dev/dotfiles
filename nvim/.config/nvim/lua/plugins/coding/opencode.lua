@@ -38,7 +38,10 @@ return {
       'n',
       '<leader>oa',
       function()
-        require('opencode').ask '@cursor: '
+        require('opencode').ask(
+          '@this: ',
+          { submit = true }
+        )
       end,
       {
         desc = 'Ask opencode about this',
@@ -48,7 +51,10 @@ return {
       'v',
       '<leader>oa',
       function()
-        require('opencode').ask '@selection: '
+        require('opencode').ask(
+          '@this: ',
+          { submit = true }
+        )
       end,
       {
         desc = 'Ask opencode about selection',

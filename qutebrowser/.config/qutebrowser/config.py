@@ -88,3 +88,6 @@ config.set("window.hide_decoration", True)
 c.tabs.padding = {"top": 5, "bottom": 5, "left": 9, "right": 9}
 c.tabs.indicator.width = 0  # no tab indicators
 c.tabs.width = "7%"
+
+# Content config
+c.content.tls.certificate_errors = "load-insecurely"  # Force loading pages despite certificate errors
