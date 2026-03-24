@@ -8,49 +8,19 @@ esac
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml" # starship
 eval "$(starship init bash)"
 
-# User configuration
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-bash libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-bash
-# users are encouraged to define aliases within the OSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias bashconfig="mate ~/.bashrc"
-# alias ohmybash="mate ~/.oh-my-bash"
+# Aliases
 alias vim='nvim'
 alias py='python3'
 alias ls='eza --icons'
 alias asr='atuin scripts run'
+alias gst='git status'
 
 bind 'set bell-style none'
 neofetch
 
 # Created by `pipx` on 2025-02-13 17:41:43
-export ANDROID_HOME="/home/deval/Android/Sdk"
 export JAVA_HOME="/usr/lib/jvm/java-23-openjdk"
 export PATH="$PATH:$JAVA_HOME/bin"
-export PATH="$PATH:$ANDROID_HOME/emulator/emulator"
-export PATH="$PATH:$ANDROID_HOME/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:$ANDROID_HOME/build-tools"
 export PATH="$PATH:/home/deval/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
@@ -65,8 +35,6 @@ export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target,.env,.venv
   --preview 'tree -C {}'"
 
-# Alias
-alias emulator="$ANDROID_HOME/emulator/emulator"
 eval "$(uv generate-shell-completion bash)"
 
 # Zoxide
@@ -88,3 +56,10 @@ export PATH=$HOME/.opencode/bin:$PATH
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash)"
+
+# Load all .bash files from plugins directory
+if [[ -d "$HOME/dotfiles/bash/plugins" ]]; then
+  for plugin in "$HOME/dotfiles/bash/plugins"/*.bash; do
+    [[ -f "$plugin" ]] && source "$plugin"
+  done
+fi
