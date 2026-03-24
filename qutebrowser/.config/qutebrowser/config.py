@@ -19,6 +19,7 @@ c.url.searchengines = {
     "!apkg": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
     "!gh": "https://github.com/search?o=desc&q={}&s=stars",
     "!yt": "https://www.youtube.com/results?search_query={}",
+    "!c": "https://dictionary.cambridge.org/dictionary/english/{}",
 }
 
 c.completion.open_categories = [
@@ -48,7 +49,7 @@ config.bind("gK", "tab-move -")
 config.bind("gm", "tab-move")
 config.bind("<ctrl+j>", "completion-item-focus next", "command")
 config.bind("<ctrl+k>", "completion-item-focus prev", "command")
-config.bind("<space>ss", "cmd-set-text -s :tab-select")
+config.bind("<space><space>", "cmd-set-text -s :tab-select")
 
 # Readline-like bindings in insert mode
 config.bind('<Ctrl-h>', 'fake-key <Backspace>', 'insert')
@@ -70,7 +71,7 @@ config.bind('<Ctrl-x><Ctrl-e>', 'open-editor', 'insert')
 # Userscript bindings
 config.bind("<space>l", "spawn --userscript localhost")
 config.bind("<space>d", "spawn --userscript dmenu-qutebrowser tab")
-config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
+# config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
 
 # Disable passthrough mode
 config.bind("<Ctrl-v>", "nop")

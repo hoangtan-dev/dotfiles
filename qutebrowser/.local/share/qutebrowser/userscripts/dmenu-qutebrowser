@@ -75,6 +75,7 @@ get_selection() {
         # Linux/other systems using fuzzel
         create_menu | fuzzel \
             --dmenu \
+            --no-sort \
             --lines=18 \
             --width=80 \
             --horizontal-pad=16 \
@@ -82,14 +83,6 @@ get_selection() {
             --inner-pad=4 \
             --border-width=2 \
             --border-radius=12 \
-            --background-color="1e1e2eff" \
-            --text-color="cdd6f4ff" \
-            --prompt-color="89b4faff" \
-            --input-color="cdd6f4ff" \
-            --match-color="f38ba8ff" \
-            --selection-color="585b70ff" \
-            --selection-text-color="cdd6f4ff" \
-            --selection-match-color="f9e2afff" \
             --border-color="89b4faff" \
             --prompt="qutebrowser> " \
             --placeholder="Search bookmarks, quickmarks, and history..."
