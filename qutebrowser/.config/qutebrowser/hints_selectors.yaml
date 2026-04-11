@@ -1,0 +1,10 @@
+domains:
+  "*://teams.microsoft.com/*":
+    chat:
+      - 'div[data-inp="simple-collab-chat-switch"]:has([id^="title-chat-list-item_"])'
+  "*://chat.fpt.com/*":
+    chat:
+      - "div.group-element.cursor-pointer > div.group-element-item"
+  "*://www.messenger.com/*":
+    chat:
+      - 'a[href^="/t/"], a[href^="/e2ee/t/"]'

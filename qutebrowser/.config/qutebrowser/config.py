@@ -5,6 +5,9 @@ config = config  # noqa: F821 pylint: disable=E0602,C0103
 
 import catppuccin
 
+import yaml
+from pathlib import Path
+
 # load your autoconfig, use this, if the rest of your config is empty!
 config.load_autoconfig()
 
@@ -89,6 +92,40 @@ config.set("window.hide_decoration", True)
 c.tabs.padding = {"top": 5, "bottom": 5, "left": 9, "right": 9}
 c.tabs.indicator.width = 0  # no tab indicators
 c.tabs.width = "7%"
+c.tabs.select_on_remove = "last-used"
+c.statusbar.padding = {
+    "top": 6,
+    "bottom": 6,
+    "left": 4,
+    "right": 4,
+}
+# normal
+c.colors.statusbar.insert.fg = "#9fd4a9"
+c.colors.statusbar.command.fg = "#d8c39a"
 
 # Content config
 c.content.tls.certificate_errors = "load-insecurely"  # Force loading pages despite certificate errors
+
+# Custom hints selectors from a YAML file
+def load_hint_selectors(config, path="hints_selectors.yaml"):
+    yaml_path = Path(config.configdir) / path
+
+    if not yaml_path.exists():
+        return
+
+    with open(yaml_path, "r") as f:
+        data = yaml.safe_load(f) or {}
+
+    domains = data.get("domains", {})
+
+    for pattern, pickers in domains.items():
+        with config.pattern(pattern) as p:
+            for picker_name, selectors in pickers.items():
+                p.hints.selectors[picker_name] = selectors
+
+# load on startup
+load_hint_selectors(config)
+
+# Chat Selectors
+config.bind("<space>c", "hint chat", "normal")
+config.bind('<space>i', 'hint inputs', 'normal')

@@ -63,6 +63,3 @@ if [[ -d "$HOME/dotfiles/bash/plugins" ]]; then
     [[ -f "$plugin" ]] && source "$plugin"
   done
 fi
-
-# Vim mode
-set -o vi
