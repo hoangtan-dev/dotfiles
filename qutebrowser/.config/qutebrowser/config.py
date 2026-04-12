@@ -74,6 +74,8 @@ config.bind('<Ctrl-x><Ctrl-e>', 'open-editor', 'insert')
 # Userscript bindings
 config.bind("<space>l", "spawn --userscript localhost")
 config.bind("<space>d", "spawn --userscript dmenu-qutebrowser tab")
+config.bind('gs', 'cmd-set-text -s -- :spawn -u -- substiqute')
+config.bind('gS', 'cmd-set-text -s -- :spawn -u -- substiqute -t')
 # config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
 
 # Disable passthrough mode
