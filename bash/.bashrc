@@ -18,6 +18,9 @@ alias gst='git status'
 bind 'set bell-style none'
 neofetch
 
+# ENV
+export EDITOR='nvim'
+
 # Created by `pipx` on 2025-02-13 17:41:43
 export JAVA_HOME="/usr/lib/jvm/java-23-openjdk"
 export PATH="$PATH:$JAVA_HOME/bin"
@@ -54,7 +57,7 @@ bind -x '"\es":sesh_sessions'
 # opencode
 export PATH=$HOME/.opencode/bin:$PATH
 
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+# [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash)"
 
 # Load all .bash files from plugins directory
@@ -63,3 +66,8 @@ if [[ -d "$HOME/dotfiles/bash/plugins" ]]; then
     [[ -f "$plugin" ]] && source "$plugin"
   done
 fi
+
+[[ -f ~/.local/share/blesh/ble.sh ]] && source ~/.local/share/blesh/ble.sh
+
+stty time 0
+bind 'set keyseq-timeout 1'

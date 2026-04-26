@@ -1,0 +1,116 @@
+# Vim Mode
+bleopt default_keymap=vi
+
+# Imported modules
+ble-import vim-surround
+ble-import lib/vim-airline
+
+# Cursor shape
+ble-bind -m vi_nmap --cursor 2
+ble-bind -m vi_imap --cursor 5
+ble-bind -m vi_omap --cursor 4
+ble-bind -m vi_xmap --cursor 2
+ble-bind -m vi_cmap --cursor 0
+
+# Mode indicator
+bleopt keymap_vi_mode_show=
+
+# Config
+bleopt complete_auto_complete=
+bleopt complete_menu_filter=
+
+bleopt line_limit_length=10000
+bleopt history_limit_length=10000
+bleopt history_share=1
+bleopt history_erasedups_limit=
+
+# Bind 
+ble-bind -m vi_imap -f 'C-c' discard-line
+ble-bind -m vi_nmap -f 'C-c' discard-line
+
+ble-bind -m vi_imap -f 'C-o' 'accept-and-next'
+
+# Color Scheme
+ble-face -s argument_error 'bg=#f38ba8,fg=#11111b'            # Red background, Crust foreground for better contrast
+ble-face -s argument_option 'fg=#f2cdcd,italic'               # Flamingo
+ble-face -s auto_complete 'fg=#45475a,italic'                 # Surface1
+ble-face -s cmdinfo_cd_cdpath 'fg=#89b4fa,bg=#11111b,italic'  # Blue, Crust
+ble-face -s command_alias 'fg=#74c7ec'                        # Sapphire
+ble-face -s command_builtin 'fg=#fab387'                      # Peach
+ble-face -s command_directory 'fg=#89b4fa'                    # Blue
+ble-face -s command_file 'fg=#74c7ec'                         # Sapphire
+ble-face -s command_function 'fg=#74c7ec'                     # Sapphire
+ble-face -s command_keyword 'fg=#cba6f7'                      # Mauve
+ble-face -s disabled 'fg=#313244'                             # Surface0
+ble-face -s filename_directory 'fg=#89b4fa'                   # Blue
+ble-face -s filename_directory_sticky 'fg=#11111b,bg=#a6e3a1' # Crust, Green
+ble-face -s filename_executable 'fg=#a6e3a1,bold'             # Green
+ble-face -s filename_ls_colors 'none'
+ble-face -s filename_orphan 'fg=#89dceb,bold' # Sky
+ble-face -s filename_other 'none'
+ble-face -s filename_setgid 'fg=#11111b,bg=#f9e2af,underline' # Crust, Yellow
+ble-face -s filename_setuid 'fg=#11111b,bg=#fab387,underline' # Crust, Peach
+ble-face -s menu_filter_input 'fg=#11111b,bg=#f9e2af'         # Crust, Yellow
+ble-face -s overwrite_mode 'fg=#11111b,bg=#89dceb'            # Crust, Sky
+ble-face -s prompt_status_line 'bg=#9399b2'                   # Overlay2
+ble-face -s region 'bg=#45475a'                               # Surface1
+ble-face -s region_insert 'bg=#45475a'                        # Surface1
+ble-face -s region_match 'fg=#11111b,bg=#f9e2af'              # Crust, Yellow
+ble-face -s region_target 'fg=#11111b,bg=#cba6f7'             # Crust, Mauve
+ble-face -s syntax_brace 'fg=#6c7086'                         # Overlay0
+ble-face -s syntax_command 'fg=#74c7ec'                       # Sapphire
+ble-face -s syntax_comment 'fg=#f9e2af'                       # Yellow
+ble-face -s syntax_delimiter 'fg=#6c7086'                     # Overlay0
+ble-face -s syntax_document 'fg=#f5e0dc,bold'                 # Rosewater
+ble-face -s syntax_document_begin 'fg=#f5e0dc,bold'           # Rosewater
+ble-face -s syntax_error 'bg=#f38ba8,fg=#11111b'              # Red background, Crust foreground for better contrast
+ble-face -s syntax_escape 'fg=#f2cdcd'                        # Flamingo
+ble-face -s syntax_expr 'fg=#cba6f7'                          # Mauve
+ble-face -s syntax_function_name 'fg=#b4befe'                 # Lavender
+ble-face -s syntax_glob 'fg=#fab387'                          # Peach
+ble-face -s syntax_history_expansion 'fg=#b4befe,italic'      # Lavender
+ble-face -s syntax_param_expansion 'fg=#f38ba8'               # Red
+ble-face -s syntax_quotation 'fg=#a6e3a1'                     # Green
+ble-face -s syntax_tilde 'fg=#cba6f7'                         # Mauve
+ble-face -s syntax_varname 'fg=#f5e0dc'                       # Rosewater
+ble-face -s varname_array 'fg=#fab387'                        # Peach
+ble-face -s varname_empty 'fg=#fab387'                        # Peach
+ble-face -s varname_export 'fg=#fab387'                       # Peach
+ble-face -s varname_expr 'fg=#fab387'                         # Peach
+ble-face -s varname_hash 'fg=#fab387'                         # Peach
+ble-face -s varname_number 'fg=#f5e0dc'                       # Rosewater
+ble-face -s varname_readonly 'fg=#fab387'                     # Peach
+ble-face -s varname_transform 'fg=#fab387'                    # Peach
+ble-face -s varname_unset 'bg=#f38ba8,fg=#11111b'             # Red background, Crust foreground for better contrast
+ble-face -s vbell_erase 'bg=#45475a'                          # Surface1
+
+# Modules config
+ble-face -r vim_airline_@
+ble-face -s vim_airline_a                            fg=150,bg=16  # fg=#8d96a1,bg=#000000
+ble-face -s vim_airline_a_inactive                   fg=150,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_a_insert                     fg=150,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_a_normal_modified            fg=150,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_a_replace                    fg=150,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_a_visual                     fg=150,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_b                            fg=150,bg=16 # fg=#3f4b59,bg=#000000
+ble-face -s vim_airline_b_inactive                   fg=234,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_c                            fg=183,bg=16 # fg=#3f4b59,bg=#000000
+ble-face -s vim_airline_c_inactive_modified          fg=215,bg=16  # fg=#ffae57,bg=#000000
+ble-face -s vim_airline_error                        fg=234,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_error_inactive               fg=16,bg=16   # fg=#000000,bg=#000000
+ble-face -s vim_airline_warning                      fg=234,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_warning_inactive             fg=16,bg=16  # fg=#000000,bg=#000000
+ble-face -s vim_airline_x_inactive                   fg=234,bg=16 # fg=#1d1f21,bg=#000000
+ble-face -s vim_airline_z_insert                     fg=150,bg=16  # fg=#bbe67e,bg=#000000
+ble-face -s vim_airline_z_normal                     fg=239,bg=16 # fg=#3f4b59,bg=#000000
+ble-face -s vim_airline_z_normal_modified            fg=215,bg=16  # fg=#ffae57,bg=#000000
+ble-face -s vim_airline_z_replace                    fg=183,bg=16  # fg=#d4bfff,bg=#000000
+ble-face -s vim_airline_z_visual                     fg=204,bg=16  # fg=#f07178,bg=#000000
+
+bleopt vim_airline_section_a='\e[1m\q{lib/vim-airline/mode}'
+bleopt vim_airline_section_b='\q{lib/vim-airline/gitstatus}'
+bleopt vim_airline_section_c='\w'
+bleopt vim_airline_section_x='bash'
+bleopt vim_airline_section_y='$_ble_util_locale_encoding[unix]'
+bleopt vim_airline_section_z='\u'
+
