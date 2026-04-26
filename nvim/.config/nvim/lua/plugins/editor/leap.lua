@@ -4,8 +4,16 @@ return {
     enabled = true,
     keys = function()
       local ret = {}
-      for _, key in ipairs { 'f', 'F', 't', 'T' } do
-        ret[#ret + 1] = { key, mode = { 'n', 'x', 'o' } }
+      for _, key in ipairs {
+        'f',
+        'F',
+        't',
+        'T',
+      } do
+        ret[#ret + 1] = {
+          key,
+          mode = { 'n', 'x', 'o' },
+        }
       end
       return ret
     end,
@@ -15,9 +23,21 @@ return {
     'ggandor/leap.nvim',
     enabled = true,
     keys = {
-      { 's', mode = { 'n', 'x', 'o' }, desc = 'Leap Forward to' },
-      { 'S', mode = { 'n', 'x', 'o' }, desc = 'Leap Backward to' },
-      { 'gs', mode = { 'n', 'x', 'o' }, desc = 'Leap from Windows' },
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        desc = 'Leap Forward to',
+      },
+      {
+        'S',
+        mode = { 'n', 'x', 'o' },
+        desc = 'Leap Backward to',
+      },
+      {
+        'gs',
+        mode = { 'n', 'x', 'o' },
+        desc = 'Leap from Windows',
+      },
     },
     config = function(_, opts)
       local leap = require 'leap'
@@ -51,5 +71,8 @@ return {
   },
 
   -- makes some plugins dot-repeatable like leap
-  { 'tpope/vim-repeat', event = 'VeryLazy' },
+  {
+    'tpope/vim-repeat',
+    event = 'VeryLazy',
+  },
 }

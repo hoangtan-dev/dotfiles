@@ -49,7 +49,7 @@ require('lazy').setup({
     --   import = 'plugins.coding.smear-cursor',
     -- },
     { import = 'plugins.dap.core' },
-    { import = 'plugins.editor.fzf' },
+    -- { import = 'plugins.editor.fzf' },
     {
       import = 'plugins.editor.gitsigns',
     },

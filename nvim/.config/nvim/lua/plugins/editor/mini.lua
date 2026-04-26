@@ -62,6 +62,10 @@ return {
               MiniStatusline.section_filename {
                 trunc_width = 140,
               }
+            local fileinfo =
+              MiniStatusline.section_fileinfo {
+                trunc_width = 75,
+              }
             local location =
               MiniStatusline.section_location {
                 trunc_width = 75,
@@ -110,6 +114,10 @@ return {
               {
                 hl = 'MiniStatuslineFilename',
                 strings = { filename },
+              },
+              {
+                hl = 'MiniStatuslineFileinfo',
+                strings = { fileinfo },
               },
               '%=', -- End left alignment
               {

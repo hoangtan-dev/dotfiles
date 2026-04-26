@@ -27,16 +27,16 @@ return {
     end,
   },
   -- {
-  --   dir = '~/Repositories/personal/nvim-plugins/xolaani.nvim', -- or wherever your local folder is
+  --   dir = '~/repos/personal/xolaani.nvim', -- or wherever your local folder is
   --   name = 'xolaani.nvim', -- optional but recommended for clarity
   --   lazy = false,
   --   priority = 1000,
   --   config = function()
   --     require('xolaani').setup {
-  --       plugins = {
-  --         indent_blankline = false,
-  --         -- other plugins you want to enable
-  --       },
+  --       -- plugins = {
+  --       --   indent_blankline = false,
+  --       --   -- other plugins you want to enable
+  --       -- },
   --     }
   --     vim.cmd.colorscheme 'xolaani'
   --
