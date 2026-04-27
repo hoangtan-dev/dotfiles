@@ -17,6 +17,84 @@ return {
       scroll = { enabled = true },
       statuscolumn = { enabled = true },
       words = { enabled = true },
+      picker = {
+        enabled = true,
+        sources = {
+          harpoon = {
+            finder = function()
+              local harpoon =
+                require 'harpoon'
+              local output = {}
+              for _, item in
+                ipairs(
+                  harpoon:list().items
+                )
+              do
+                if
+                  item
+                  and item.value:match '%S'
+                then
+                  table.insert(output, {
+                    text = item.value,
+                    file = item.value,
+                    pos = {
+                      item.context.row,
+                      item.context.col,
+                    },
+                  })
+                end
+              end
+              return output
+            end,
+            filter = {
+              -- reruns the finder on changes
+              transform = function()
+                if changed then
+                  changed = false
+                  return true
+                end
+              end,
+            },
+            format = function(item)
+              return {
+                { item.text },
+                {
+                  ':',
+                  'SnacksPickerDelim',
+                },
+                {
+                  tostring(item.pos[1]),
+                  'SnacksPickerRow',
+                },
+                {
+                  ':',
+                  'SnacksPickerDelim',
+                },
+                {
+                  tostring(item.pos[2]),
+                  'SnacksPickerCol',
+                },
+              }
+            end,
+            preview = function(ctx)
+              if
+                Snacks.picker.util.path(
+                  ctx.item
+                )
+              then
+                return Snacks.picker.preview.file(
+                  ctx
+                )
+              else
+                return Snacks.picker.preview.none(
+                  ctx
+                )
+              end
+            end,
+            confirm = 'jump',
+          },
+        },
+      },
     },
     keys = {
       -- Top Pickers & Explorer
@@ -286,6 +364,78 @@ return {
         end,
         desc = 'LSP Workspace Symbols',
       },
+      -- Plugins Integration
+      {
+        '<C-e>',
+        function()
+          Snacks.picker.harpoon()
+        end,
+        desc = 'Harpoon',
+      },
+      {
+        '<leader>so',
+        function()
+          FuzzyOil()
+        end,
+        desc = 'Fuzzy Oil Dirs',
+      },
     },
+    config = function(_, opts)
+      local M = {}
+      Snacks.setup(opts)
+
+      function M.fuzzy_oil()
+        local find_command = {
+          'fd',
+          '--type',
+          'd',
+          '--color',
+          'never',
+        }
+        vim.fn.jobstart(find_command, {
+          stdout_buffered = true,
+          on_stdout = function(_, data)
+            if data then
+              local filtered = vim.tbl_filter(
+                function(el)
+                  return el ~= ''
+                end,
+                data
+              )
+              local items = {}
+              for _, v in
+                ipairs(filtered)
+              do
+                table.insert(
+                  items,
+                  { text = v }
+                )
+              end
+              ---@module 'snacks'
+              Snacks.picker.pick {
+                source = 'directories',
+                items = items,
+                layout = {
+                  preset = 'select',
+                },
+                format = 'text',
+                confirm = function(
+                  picker,
+                  item
+                )
+                  picker:close()
+                  vim.cmd(
+                    'Oil ' .. item.text
+                  )
+                end,
+              }
+            end
+          end,
+        })
+      end
+
+      -- Expose M globally or via a user command
+      _G.FuzzyOil = M.fuzzy_oil
+    end,
   },
 }

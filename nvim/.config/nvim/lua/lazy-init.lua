@@ -45,6 +45,9 @@ require('lazy').setup({
     {
       import = 'plugins.coding.opencode',
     },
+    {
+      import = 'plugins.coding.quicker',
+    },
     -- {
     --   import = 'plugins.coding.smear-cursor',
     -- },
@@ -79,6 +82,9 @@ require('lazy').setup({
     {
       import = 'plugins.editor.leetcode',
     },
+    -- {
+    --   import = 'plugins.editor.precognition',
+    -- },
     {
       import = 'plugins.navigation.harpoon',
     },
