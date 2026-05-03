@@ -125,13 +125,6 @@ return {
         desc = 'Buffers',
       },
       {
-        '<leader>/',
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = 'Grep',
-      },
-      {
         '<leader>:',
         function()
           Snacks.picker.command_history()
@@ -229,6 +222,13 @@ return {
       },
       {
         '<leader>sl',
+        function()
+          Snacks.picker.lines()
+        end,
+        desc = 'Buffer Lines',
+      },
+      {
+        '<leader>/',
         function()
           Snacks.picker.lines()
         end,

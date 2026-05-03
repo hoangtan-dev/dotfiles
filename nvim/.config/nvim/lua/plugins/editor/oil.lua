@@ -1,6 +1,7 @@
 return {
   {
-    'stevearc/oil.nvim',
+    -- 'stevearc/oil.nvim',
+    'barrettruth/canola.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
     -- Optional dependencies
@@ -30,12 +31,28 @@ return {
         columns = { 'icon' },
         delete_to_trash = true,
         skip_confirm_for_simple_edits = true,
+        watch_for_changes = true,
         keymaps = {
           ['<C-h>'] = false,
           ['<C-l>'] = false,
           ['<C-k>'] = false,
           ['<C-j>'] = false,
           ['<M-h>'] = false,
+        },
+        git = {
+          -- Return true to automatically git add/mv/rm files
+          add = function(path)
+            return false
+          end,
+          mv = function(
+            src_path,
+            dest_path
+          )
+            return true
+          end,
+          rm = function(path)
+            return false
+          end,
         },
         win_options = {
           winbar = '%{v:lua.CustomOilBar()}',
@@ -72,7 +89,9 @@ return {
     end,
   },
   {
-    'refractalize/oil-git-status.nvim',
-    config = true,
+    'malewicz1337/oil-git.nvim',
+    dependencies = {
+      'stevearc/oil.nvim',
+    },
   },
 }

@@ -20,33 +20,53 @@ return {
     opts = { labeled_modes = 'nx' },
   },
   {
-    'ggandor/leap.nvim',
+    'https://codeberg.org/andyg/leap.nvim',
     enabled = true,
-    keys = {
-      {
-        's',
-        mode = { 'n', 'x', 'o' },
-        desc = 'Leap Forward to',
-      },
-      {
-        'S',
-        mode = { 'n', 'x', 'o' },
-        desc = 'Leap Backward to',
-      },
-      {
-        'gs',
-        mode = { 'n', 'x', 'o' },
-        desc = 'Leap from Windows',
-      },
-    },
     config = function(_, opts)
       local leap = require 'leap'
       for k, v in pairs(opts) do
         leap.opts[k] = v
       end
       leap.add_default_mappings(true)
+      vim.keymap.set(
+        { 'n', 'x', 'o' },
+        's',
+        '<Plug>(leap)'
+      )
+      vim.keymap.set(
+        'n',
+        'S',
+        '<Plug>(leap-from-window)'
+      )
+      vim.keymap.set(
+        { 'n', 'o' },
+        'gs',
+        '<Plug>(leap-remote)'
+      )
+
       vim.keymap.del({ 'x', 'o' }, 'x')
       vim.keymap.del({ 'x', 'o' }, 'X')
+
+      -- Highly recommended: define a preview filter to reduce visual noise
+      -- and the blinking effect after the first keypress.
+      -- For example, define word boundaries as the common case, that is, skip
+      -- preview for matches starting with whitespace or an alphabetic
+      -- mid-word character: foobar[baaz] = quux
+      --                     *    ***  ** * *  *
+      require('leap').opts.preview = function(
+        ch0,
+        ch1,
+        ch2
+      )
+        return not (
+          ch1:match '%s'
+          or (
+            ch0:match '%a'
+            and ch1:match '%a'
+            and ch2:match '%a'
+          )
+        )
+      end
     end,
   },
 
