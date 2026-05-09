@@ -1,10 +1,6 @@
 # Vim Mode
 bleopt default_keymap=vi
 
-# Imported modules
-ble-import vim-surround
-ble-import lib/vim-airline
-
 # Cursor shape
 ble-bind -m vi_nmap --cursor 2
 ble-bind -m vi_imap --cursor 5
@@ -13,7 +9,7 @@ ble-bind -m vi_xmap --cursor 2
 ble-bind -m vi_cmap --cursor 0
 
 # Mode indicator
-bleopt keymap_vi_mode_show=
+bleopt keymap_vi_mode_show:=
 
 # Config
 bleopt complete_auto_complete=
@@ -84,33 +80,25 @@ ble-face -s varname_transform 'fg=#fab387'                    # Peach
 ble-face -s varname_unset 'bg=#f38ba8,fg=#11111b'             # Red background, Crust foreground for better contrast
 ble-face -s vbell_erase 'bg=#45475a'                          # Surface1
 
-# Modules config
-ble-face -r vim_airline_@
-ble-face -s vim_airline_a                            fg=150,bg=16  # fg=#8d96a1,bg=#000000
-ble-face -s vim_airline_a_inactive                   fg=150,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_a_insert                     fg=150,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_a_normal_modified            fg=150,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_a_replace                    fg=150,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_a_visual                     fg=150,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_b                            fg=150,bg=16 # fg=#3f4b59,bg=#000000
-ble-face -s vim_airline_b_inactive                   fg=234,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_c                            fg=183,bg=16 # fg=#3f4b59,bg=#000000
-ble-face -s vim_airline_c_inactive_modified          fg=215,bg=16  # fg=#ffae57,bg=#000000
-ble-face -s vim_airline_error                        fg=234,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_error_inactive               fg=16,bg=16   # fg=#000000,bg=#000000
-ble-face -s vim_airline_warning                      fg=234,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_warning_inactive             fg=16,bg=16  # fg=#000000,bg=#000000
-ble-face -s vim_airline_x_inactive                   fg=234,bg=16 # fg=#1d1f21,bg=#000000
-ble-face -s vim_airline_z_insert                     fg=150,bg=16  # fg=#bbe67e,bg=#000000
-ble-face -s vim_airline_z_normal                     fg=239,bg=16 # fg=#3f4b59,bg=#000000
-ble-face -s vim_airline_z_normal_modified            fg=215,bg=16  # fg=#ffae57,bg=#000000
-ble-face -s vim_airline_z_replace                    fg=183,bg=16  # fg=#d4bfff,bg=#000000
-ble-face -s vim_airline_z_visual                     fg=204,bg=16  # fg=#f07178,bg=#000000
 
-bleopt vim_airline_section_a='\e[1m\q{lib/vim-airline/mode}'
-bleopt vim_airline_section_b='\q{lib/vim-airline/gitstatus}'
-bleopt vim_airline_section_c='\w'
-bleopt vim_airline_section_x='bash'
-bleopt vim_airline_section_y='$_ble_util_locale_encoding[unix]'
-bleopt vim_airline_section_z='\u'
+##-----------------------------------------------------------------------------
+## Settings for Vim mode
+
+function blerc/vim-load-hook {
+  ((_ble_bash>=40300)) && builtin bind 'set keyseq-timeout 1'
+
+  #----------------------------------------------------------------------------
+  ## The default mapping of RET and C-m in the insert mode inserts newline with
+  ## multiline commands or incomplete commands.  They moves the cursor position
+  ## to the next line in the normal mode.  Instead, with the following setting,
+  ## RET and C-m always causes the execution of the command even in the
+  ## multiline mode or when the command is not syntactically completed.
+
+  ble-bind -m vi_imap -f 'C-m' accept-line
+  ble-bind -m vi_imap -f 'RET' accept-line
+  ble-bind -m vi_nmap -f 'C-m' accept-line
+  ble-bind -m vi_nmap -f 'RET' accept-line
+}
+
+blehook/eval-after-load keymap_vi blerc/vim-load-hook
 
