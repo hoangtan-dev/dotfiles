@@ -17,13 +17,16 @@ config.load_autoconfig()
 catppuccin.setup(c, "mocha", True)
 
 c.url.searchengines = {
-    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "DEFAULT": "https://www.google.com/search?q={}",
     "!aw": "https://wiki.archlinux.org/?search={}",
     "!apkg": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
     "!gh": "https://github.com/search?o=desc&q={}&s=stars",
     "!yt": "https://www.youtube.com/results?search_query={}",
     "!c": "https://dictionary.cambridge.org/dictionary/english/{}",
+    "!g": "https://github.com/hoangtan-dev/{}",
 }
+
+c.url.start_pages = ["qute://version/"]
 
 c.completion.open_categories = [
     "searchengines",
@@ -55,27 +58,27 @@ config.bind("<ctrl+k>", "completion-item-focus prev", "command")
 config.bind("<space><space>", "cmd-set-text -s :tab-select")
 
 # Readline-like bindings in insert mode
-config.bind('<Ctrl-h>', 'fake-key <Backspace>', 'insert')
-config.bind('<Ctrl-a>', 'fake-key <Home>', 'insert')
-config.bind('<Ctrl-e>', 'fake-key <End>', 'insert')
-config.bind('<Ctrl-b>', 'fake-key <Left>', 'insert')
-config.bind('<Mod1-b>', 'fake-key <Ctrl-Left>', 'insert')
-config.bind('<Ctrl-f>', 'fake-key <Right>', 'insert')
-config.bind('<Mod1-f>', 'fake-key <Ctrl-Right>', 'insert')
-config.bind('<Ctrl-p>', 'fake-key <Up>', 'insert')
-config.bind('<Ctrl-n>', 'fake-key <Down>', 'insert')
-config.bind('<Mod1-d>', 'fake-key <Ctrl-Delete>', 'insert')
-config.bind('<Ctrl-d>', 'fake-key <Delete>', 'insert')
-config.bind('<Ctrl-w>', 'fake-key <Ctrl-Backspace>', 'insert')
-config.bind('<Ctrl-u>', 'fake-key <Shift-Home><Delete>', 'insert')
-config.bind('<Ctrl-k>', 'fake-key <Shift-End><Delete>', 'insert')
-config.bind('<Ctrl-x><Ctrl-e>', 'open-editor', 'insert')
+config.bind("<Ctrl-h>", "fake-key <Backspace>", "insert")
+config.bind("<Ctrl-a>", "fake-key <Home>", "insert")
+config.bind("<Ctrl-e>", "fake-key <End>", "insert")
+config.bind("<Ctrl-b>", "fake-key <Left>", "insert")
+config.bind("<Mod1-b>", "fake-key <Ctrl-Left>", "insert")
+config.bind("<Ctrl-f>", "fake-key <Right>", "insert")
+config.bind("<Mod1-f>", "fake-key <Ctrl-Right>", "insert")
+config.bind("<Ctrl-p>", "fake-key <Up>", "insert")
+config.bind("<Ctrl-n>", "fake-key <Down>", "insert")
+config.bind("<Mod1-d>", "fake-key <Ctrl-Delete>", "insert")
+config.bind("<Ctrl-d>", "fake-key <Delete>", "insert")
+config.bind("<Ctrl-w>", "fake-key <Ctrl-Backspace>", "insert")
+config.bind("<Ctrl-u>", "fake-key <Shift-Home><Delete>", "insert")
+config.bind("<Ctrl-k>", "fake-key <Shift-End><Delete>", "insert")
+config.bind("<Ctrl-x><Ctrl-e>", "open-editor", "insert")
 
 # Userscript bindings
 config.bind("<space>l", "spawn --userscript localhost")
 config.bind("<space>d", "spawn --userscript dmenu-qutebrowser tab")
-config.bind('gs', 'cmd-set-text -s -- :spawn -u -- substiqute')
-config.bind('gS', 'cmd-set-text -s -- :spawn -u -- substiqute -t')
+config.bind("gs", "cmd-set-text -s -- :spawn -u -- substiqute")
+config.bind("gS", "cmd-set-text -s -- :spawn -u -- substiqute -t")
 # config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
 
 # Disable passthrough mode
@@ -106,7 +109,10 @@ c.colors.statusbar.insert.fg = "#9fd4a9"
 c.colors.statusbar.command.fg = "#d8c39a"
 
 # Content config
-c.content.tls.certificate_errors = "load-insecurely"  # Force loading pages despite certificate errors
+c.content.tls.certificate_errors = (
+    "load-insecurely"  # Force loading pages despite certificate errors
+)
+
 
 # Custom hints selectors from a YAML file
 def load_hint_selectors(config, path="hints_selectors.yaml"):
@@ -123,11 +129,14 @@ def load_hint_selectors(config, path="hints_selectors.yaml"):
     for pattern, pickers in domains.items():
         with config.pattern(pattern) as p:
             for picker_name, selectors in pickers.items():
-                p.hints.selectors[picker_name] = selectors
+                if picker_name not in p.hints.selectors:
+                    p.hints.selectors[picker_name] = []
+                p.hints.selectors[picker_name] += selectors
+
 
 # load on startup
 load_hint_selectors(config)
 
 # Chat Selectors
 config.bind("<space>c", "hint chat", "normal")
-config.bind('<space>i', 'hint inputs', 'normal')
+config.bind("<space>i", "hint inputs", "normal")
