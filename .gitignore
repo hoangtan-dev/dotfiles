@@ -41,3 +41,7 @@ luac.out
 
 # Plugins
 tmux/.config/tmux/plugins
+
+# Bookmarks
+qutebrowser/bookmarks
+qutebrowser/quickmarks

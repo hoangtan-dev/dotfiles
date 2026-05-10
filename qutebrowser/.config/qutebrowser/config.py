@@ -26,7 +26,8 @@ c.url.searchengines = {
     "!g": "https://github.com/hoangtan-dev/{}",
 }
 
-c.url.start_pages = ["qute://version/"]
+c.url.start_pages = ["qute://start/"]
+c.url.default_page = "qute://start/"
 
 c.completion.open_categories = [
     "searchengines",
