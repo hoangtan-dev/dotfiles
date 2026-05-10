@@ -8,3 +8,6 @@ domains:
   "*://www.messenger.com/*":
     chat:
       - 'a[href^="/t/"], a[href^="/e2ee/t/"]'
+  "*://https://chatgpt.com/*":
+    copy:
+      - '[aria-label="Copy"]'

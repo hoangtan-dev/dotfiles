@@ -91,6 +91,11 @@ c.colors.webpage.darkmode.algorithm = "lightness-cielab"
 c.colors.webpage.darkmode.policy.images = "never"
 config.set("colors.webpage.darkmode.enabled", False, "file://*")
 
+c.qt.args = [
+    "enable-features=WebUIDarkMode",
+    "force-dark-mode",
+]
+
 # Remove Titlebar (MacOS)
 config.set("window.hide_decoration", True)
 
@@ -128,16 +133,26 @@ def load_hint_selectors(config, path="hints_selectors.yaml"):
     domains = data.get("domains", {})
 
     for pattern, pickers in domains.items():
-        with config.pattern(pattern) as p:
-            for picker_name, selectors in pickers.items():
-                if picker_name not in p.hints.selectors:
-                    p.hints.selectors[picker_name] = []
-                p.hints.selectors[picker_name] += selectors
+        for picker_name, selectors in pickers.items():
+            if picker_name not in c.hints.selectors:
+                c.hints.selectors[picker_name] = []
+            c.hints.selectors[picker_name] += selectors
 
 
 # load on startup
 load_hint_selectors(config)
 
-# Chat Selectors
+# Custom Selectors
 config.bind("<space>c", "hint chat", "normal")
 config.bind("<space>i", "hint inputs", "normal")
+config.bind("<space>y", "hint copy", "normal")
+
+# Error Messages Handling
+c.content.javascript.log_message.excludes = {
+    "userscript:_qute_js": [
+        "Uncaught TypeError: Cannot read properties of undefined (reading 'length')"
+    ]
+}
+
+# Scroll
+c.scrolling.smooth = True
