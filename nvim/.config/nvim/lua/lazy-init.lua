@@ -127,6 +127,9 @@ require('lazy').setup({
       import = 'plugins.languages.python',
     },
     {
+      import = 'plugins.languages.c',
+    },
+    {
       import = 'plugins.languages.tex',
     },
     {

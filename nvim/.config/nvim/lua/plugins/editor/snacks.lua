@@ -258,13 +258,6 @@ return {
       },
       -- search
       {
-        '<leader>s',
-        function()
-          Snacks.picker.search_history()
-        end,
-        desc = 'Search History',
-      },
-      {
         '<leader>sd',
         function()
           Snacks.picker.diagnostics()

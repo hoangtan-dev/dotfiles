@@ -303,17 +303,16 @@ return {
           'docker-compose-language-service',
           'dockerfile-language-server',
           'eslint-lsp',
-          -- 'hadolint',
           'js-debug-adapter',
           'neocmakelsp',
           'prettier',
           'prettierd',
           'pylint',
           'ruff',
-          'ruff-lsp',
           'stylua',
           'tailwindcss-language-server',
           'vtsls',
+          'clangd',
         }
       )
 

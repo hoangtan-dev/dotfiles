@@ -128,3 +128,13 @@ keymap.set(
   '<cmd>update<CR>',
   { desc = 'Save' }
 )
+
+-- Replace all occurrences of word under cursor
+keymap.set(
+  'n',
+  '<leader>s',
+  [[:%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]],
+  {
+    desc = 'Replace all occurrences of word under cursor',
+  }
+)
