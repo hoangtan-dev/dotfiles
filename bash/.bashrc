@@ -16,7 +16,7 @@ alias asr='atuin scripts run'
 alias gst='git status'
 
 bind 'set bell-style none'
-neofetch
+fastfetch && echo
 
 # ENV
 export EDITOR='nvim'
@@ -58,6 +58,7 @@ bind -x '"\es":sesh_sessions'
 export PATH=$HOME/.opencode/bin:$PATH
 
 # [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+. "$HOME/.atuin/bin/env"
 eval "$(atuin init bash)"
 
 # Load all .bash files from plugins directory
@@ -71,3 +72,11 @@ fi
 
 stty time 0
 bind 'set keyseq-timeout 1'
+
+# pnpm
+export PNPM_HOME="/home/deval/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

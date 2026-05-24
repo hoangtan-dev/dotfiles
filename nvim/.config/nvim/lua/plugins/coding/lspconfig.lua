@@ -138,7 +138,7 @@ return {
               )
             if
               client
-              and client.supports_method(
+              and client:supports_method(
                 vim.lsp.protocol.Methods.textDocument_documentHighlight
               )
             then
@@ -197,7 +197,7 @@ return {
             -- This may be unwanted, since they displace some of your code
             if
               client
-              and client.supports_method(
+              and client:supports_method(
                 vim.lsp.protocol.Methods.textDocument_inlayHint
               )
             then
@@ -312,7 +312,8 @@ return {
           'stylua',
           'tailwindcss-language-server',
           'vtsls',
-          'clangd',
+          'ty',
+          -- 'clangd',
         }
       )
 
