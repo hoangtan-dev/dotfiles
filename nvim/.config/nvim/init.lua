@@ -33,6 +33,22 @@ vim.api.nvim_set_hl(
   }
 )
 
+-- Enable Spell checking for markdown and gitcommit filetypes
+vim.api.nvim_create_autocmd(
+  'FileType',
+  {
+    pattern = {
+      'markdown',
+      'text',
+      'gitcommit',
+    },
+    callback = function()
+      vim.opt_local.spell = true
+      vim.opt_local.spelllang =
+        { 'en_us' }
+    end,
+  }
+)
 -- Hardcore mode toggle (default OFF)
 vim.g.hardcore_mode = false
 
