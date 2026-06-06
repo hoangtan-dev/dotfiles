@@ -17,7 +17,7 @@ config.load_autoconfig()
 catppuccin.setup(c, "mocha", True)
 
 c.url.searchengines = {
-    "DEFAULT": "https://www.google.com/search?q={}",
+    "DEFAULT": "https://duckduckgo.com/?q={}",
     "!aw": "https://wiki.archlinux.org/?search={}",
     "!apkg": "https://archlinux.org/packages/?sort=&q={}&maintainer=&flagged=",
     "!gh": "https://github.com/search?o=desc&q={}&s=stars",
@@ -26,8 +26,8 @@ c.url.searchengines = {
     "!g": "https://github.com/hoangtan-dev/{}",
 }
 
-c.url.start_pages = ["qute://start/"]
-c.url.default_page = "qute://start/"
+c.url.start_pages = ["https://duckduckgo.com/"]
+c.url.default_page = "https://duckduckgo.com/"
 
 c.completion.open_categories = [
     "searchengines",
@@ -38,10 +38,14 @@ c.completion.open_categories = [
 ]
 
 c.auto_save.session = True  # save tabs on quit/restart
+c.session.lazy_restore = (
+    True  # restore tabs on startup, but load them only when selected
+)
+
+c.input.insert_mode.auto_load = True
 
 # keybinding changes
-config.bind("-", "cmd-set-text -s :open -t")
-config.bind("h", "history")
+config.bind("-", "open -t ;; mode-enter insert")
 config.bind("cc", 'hint images spawn sh -c "cliphist link {hint-url}"')
 config.bind("cs", "cmd-set-text -s :config-source")
 config.bind("tH", "config-cycle tabs.show multiple never")
