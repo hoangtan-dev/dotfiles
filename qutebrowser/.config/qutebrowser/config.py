@@ -45,7 +45,7 @@ c.session.lazy_restore = (
 c.input.insert_mode.auto_load = True
 
 # keybinding changes
-config.bind("-", "open -t ;; mode-enter insert")
+config.bind("-", "cmd-set-text -s :open -t")
 config.bind("cc", 'hint images spawn sh -c "cliphist link {hint-url}"')
 config.bind("cs", "cmd-set-text -s :config-source")
 config.bind("tH", "config-cycle tabs.show multiple never")
