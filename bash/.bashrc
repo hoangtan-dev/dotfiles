@@ -27,6 +27,11 @@ export PATH="$PATH:$JAVA_HOME/bin"
 export PATH="$PATH:/home/deval/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
+# Go binaries
+if [[ -d "$HOME/go/bin" ]]; then
+    export PATH="$HOME/go/bin:$PATH"
+fi
+
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
