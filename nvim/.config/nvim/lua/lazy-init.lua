@@ -48,6 +48,9 @@ require('lazy').setup({
     {
       import = 'plugins.coding.quicker',
     },
+    {
+      import = 'plugins.coding.smart-paste',
+    },
     -- {
     --   import = 'plugins.coding.smear-cursor',
     -- },
