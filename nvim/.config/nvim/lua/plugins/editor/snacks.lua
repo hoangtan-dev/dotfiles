@@ -260,13 +260,6 @@ return {
       {
         '<leader>sd',
         function()
-          Snacks.picker.diagnostics()
-        end,
-        desc = 'Diagnostics',
-      },
-      {
-        '<leader>sd',
-        function()
           Snacks.picker.diagnostics_buffer()
         end,
         desc = 'Buffer Diagnostics',
@@ -374,6 +367,13 @@ return {
       -- Plugins Integration
       {
         '<C-e>',
+        function()
+          Snacks.picker.harpoon()
+        end,
+        desc = 'Harpoon',
+      },
+      {
+        '<leader>h',
         function()
           Snacks.picker.harpoon()
         end,

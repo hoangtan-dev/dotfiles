@@ -152,6 +152,15 @@ require('lazy').setup({
       import = 'plugins.ui.treesitter-context',
     },
     {
+      import = 'plugins.ui.image',
+    },
+    {
+      import = 'plugins.integrations.wezterm',
+    },
+    {
+      import = 'plugins.integrations.ipynb',
+    },
+    {
       import = 'plugins.util.mini-hipatterns',
     },
   },

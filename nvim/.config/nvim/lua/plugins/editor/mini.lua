@@ -62,14 +62,26 @@ return {
               MiniStatusline.section_filename {
                 trunc_width = 140,
               }
-            local fileinfo =
-              MiniStatusline.section_fileinfo {
-                trunc_width = 75,
-              }
-            local location =
-              MiniStatusline.section_location {
-                trunc_width = 75,
-              }
+            local molten_status = ''
+            local molten_ok, molten =
+              pcall(
+                require,
+                'molten.status'
+              )
+            if molten_ok then
+              local init =
+                molten.initialized()
+              if init ~= '' then
+                local kernels =
+                  molten.kernels()
+                molten_status = '󰘦 '
+                  .. (
+                    kernels ~= ''
+                      and kernels
+                    or init
+                  )
+              end
+            end
             local search =
               MiniStatusline.section_searchcount {
                 trunc_width = 75,
@@ -115,10 +127,6 @@ return {
                 hl = 'MiniStatuslineFilename',
                 strings = { filename },
               },
-              {
-                hl = 'MiniStatuslineFileinfo',
-                strings = { fileinfo },
-              },
               '%=', -- End left alignment
               {
                 hl = 'MiniStatuslineBlame',
@@ -129,10 +137,15 @@ return {
                 strings = { dap_status },
               },
               {
+                hl = 'MiniStatuslineDevinfo',
+                strings = {
+                  molten_status,
+                },
+              },
+              {
                 hl = mode_hl,
                 strings = {
                   search,
-                  location,
                 },
               },
             }
