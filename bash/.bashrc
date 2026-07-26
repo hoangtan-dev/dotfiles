@@ -85,3 +85,38 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+# Automatically start tmux if not already inside a tmux session
+if command -v tmux &> /dev/null \
+    && [ -n "$PS1" ] \
+    && [[ ! "$TERM" =~ screen ]] \
+    && [[ ! "$TERM" =~ tmux ]] \
+    && [ -z "$TMUX" ] \
+    && [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    exec tmux
+fi
+
+# Copy file path to clipboard
+yf() {
+    local file="$1"
+
+    if [[ -z "$file" ]]; then
+        echo "Usage: yf <file>"
+        return 1
+    fi
+
+    local path
+    path=$(realpath "$file") || return 1
+
+    printf '%s' "$path" | wl-copy
+    echo "Copied: $path"
+}
+
+# Copy current working directory to clipboard
+yd() {
+    local path
+    path=$(pwd)
+
+    printf '%s' "$path" | wl-copy
+    echo "Copied: $path"
+}
