@@ -42,6 +42,9 @@ c.session.lazy_restore = (
     True  # restore tabs on startup, but load them only when selected
 )
 
+c.input.insert_mode.auto_enter = False
+c.input.insert_mode.auto_leave = False
+c.input.insert_mode.leave_on_load = False
 c.input.insert_mode.auto_load = True
 
 # keybinding changes
@@ -86,6 +89,7 @@ config.bind("gs", "cmd-set-text -s -- :spawn -u -- substiqute")
 config.bind("gS", "cmd-set-text -s -- :spawn -u -- substiqute -t")
 # config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
 
+
 # Disable passthrough mode
 config.bind("<Ctrl-v>", "nop")
 
@@ -122,6 +126,8 @@ c.colors.statusbar.command.fg = "#d8c39a"
 c.content.tls.certificate_errors = (
     "load-insecurely"  # Force loading pages despite certificate errors
 )
+
+
 
 
 # Custom hints selectors from a YAML file
