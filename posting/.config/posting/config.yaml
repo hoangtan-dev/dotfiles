@@ -1,0 +1,17 @@
+theme: hypernova
+layout: horizontal
+
+heading:
+  visible: false
+
+keymap:
+  search-requests: ctrl+r
+  toggle-collection: ctrl+R
+
+collection_browser:
+  show_on_startup: false
+
+watch_env_files: true
+
+editor: nvim
+pager_json: fx

@@ -20,6 +20,9 @@ fastfetch && echo
 
 # ENV
 export EDITOR='nvim'
+if [[ -f "$HOME/.config/shell/env" ]]; then
+  source "$HOME/.config/shell/env"
+fi
 
 # Created by `pipx` on 2025-02-13 17:41:43
 export JAVA_HOME="/usr/lib/jvm/java-23-openjdk"
@@ -87,14 +90,14 @@ esac
 # pnpm end
 
 # Automatically start tmux if not already inside a tmux session
-if command -v tmux &> /dev/null \
-    && [ -n "$PS1" ] \
-    && [[ ! "$TERM" =~ screen ]] \
-    && [[ ! "$TERM" =~ tmux ]] \
-    && [ -z "$TMUX" ] \
-    && [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
-    exec tmux
-fi
+# if command -v tmux &> /dev/null \
+#     && [ -n "$PS1" ] \
+#     && [[ ! "$TERM" =~ screen ]] \
+#     && [[ ! "$TERM" =~ tmux ]] \
+#     && [ -z "$TMUX" ] \
+#     && [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+#     exec tmux
+# fi
 
 # Copy file path to clipboard
 yf() {
