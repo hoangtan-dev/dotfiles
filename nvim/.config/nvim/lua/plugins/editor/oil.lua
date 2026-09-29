@@ -90,8 +90,8 @@ return {
   },
   {
     'malewicz1337/oil-git.nvim',
-    dependencies = {
-      'stevearc/oil.nvim',
-    },
+    -- Do not declare `stevearc/oil.nvim` here: canola.nvim is a drop-in
+    -- replacement that provides `require('oil')`, and loading both mixes their
+    -- runtime files (e.g. canola view.lua with oil.nvim parser.lua).
   },
 }

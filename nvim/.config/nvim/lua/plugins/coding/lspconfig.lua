@@ -240,6 +240,9 @@ return {
           require('cmp_nvim_lsp').default_capabilities()
         )
 
+      -- Allow servers to register file watchers.
+      capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --

@@ -46,10 +46,10 @@ require('lazy').setup({
       import = 'plugins.coding.opencode',
     },
     {
-      import = 'plugins.coding.quicker',
+      import = 'plugins.coding.pi-nvim',
     },
     {
-      import = 'plugins.coding.smart-paste',
+      import = 'plugins.coding.quicker',
     },
     -- {
     --   import = 'plugins.coding.smear-cursor',
