@@ -128,8 +128,6 @@ c.content.tls.certificate_errors = (
 )
 
 
-
-
 # Custom hints selectors from a YAML file
 def load_hint_selectors(config, path="hints_selectors.yaml"):
     yaml_path = Path(config.configdir) / path
@@ -166,3 +164,16 @@ c.content.javascript.log_message.excludes = {
 
 # Scroll
 c.scrolling.smooth = True
+
+c.fileselect.handler = "default"
+c.qt.environ["QT_QPA_PLATFORMTHEME"] = "xdgdesktopportal"
+
+# Use the Oil portal to choose a folder from the download destination prompt.
+# System Python provides Fedora's PyGObject D-Bus bindings.
+c.downloads.location.prompt = True
+c.fileselect.folder.command = [
+    "/usr/bin/python3",
+    str(config.configdir) + "/pick-folder.py",
+    "{}",
+]
+config.bind("<Ctrl-f>", "prompt-fileselect-external", mode="prompt")
