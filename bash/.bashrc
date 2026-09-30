@@ -48,6 +48,7 @@ export FZF_ALT_C_OPTS="
   --preview 'tree -C {}'"
 
 eval "$(uv generate-shell-completion bash)"
+eval "$(direnv hook bash)"
 
 # Zoxide
 eval "$(zoxide init bash --cmd cd)"
