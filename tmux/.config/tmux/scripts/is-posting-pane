@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -u
+
+tty_name=${1#/dev/}
+
+while IFS= read -r command; do
+    case "$command" in
+        */posting|*/posting\ *)
+            printf '1'
+            exit 0
+            ;;
+    esac
+done < <(ps -t "$tty_name" -o args= 2>/dev/null)
+
+printf '0'
