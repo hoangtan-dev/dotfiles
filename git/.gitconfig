@@ -7,6 +7,7 @@
 	helper = store
 [core]
 	editor = nvim
+	excludesFile = ~/.config/git/ignore
 [gpg]
 	format = ssh
 [commit]

@@ -1,0 +1,9 @@
+# Project-local environment files
+.env
+.env.*
+!.env.example
+.envrc
+.venv/
+
+# Local development files
+.DS_Store
