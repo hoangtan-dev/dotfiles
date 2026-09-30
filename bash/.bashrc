@@ -14,6 +14,7 @@ alias py='python3'
 alias ls='eza --icons'
 alias asr='atuin scripts run'
 alias gst='git status'
+alias wm='workmux'
 
 bind 'set bell-style none'
 fastfetch && echo

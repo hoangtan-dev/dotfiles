@@ -69,6 +69,16 @@ config.enable_wayland = true
 config.keys = {
   -- MacOS: Toggle Full Screen
   { key = 'f', mods = 'CTRL|CMD', action = wezterm.action.ToggleFullScreen },
+  {
+    key = 'j',
+    mods = 'CTRL',
+    action = wezterm.action.SendKey { key = 'DownArrow' },
+  },
+  {
+    key = 'k',
+    mods = 'CTRL',
+    action = wezterm.action.SendKey { key = 'UpArrow' },
+  },
 }
 
 -- Custom commands
