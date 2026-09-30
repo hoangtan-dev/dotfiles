@@ -1,7 +1,7 @@
 return {
   {
     -- 'stevearc/oil.nvim',
-    'barrettruth/canola.nvim',
+    'https://forge.barrettruth.com/barrettruth/canola.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
     -- Optional dependencies
@@ -59,7 +59,10 @@ return {
           signcolumn = 'yes:2',
         },
         view_options = {
-          show_hidden = true,
+          show_hidden = not (
+            vim.env.OIL_FILECHOOSER_REQUEST
+            and vim.env.OIL_FILECHOOSER_REQUEST ~= ''
+          ),
           is_always_hidden = function(
             name,
             _
@@ -87,6 +90,18 @@ return {
         }
       )
     end,
+  },
+  {
+    'noby-y/oil-xdg-filechooser.nvim',
+    lazy = false,
+    dependencies = {
+      'https://forge.barrettruth.com/barrettruth/canola.nvim',
+    },
+    opts = {
+      -- Register the system file chooser manually with :OilFileChooser install.
+      auto_install = false,
+      manage_portal_preference = true,
+    },
   },
   {
     'malewicz1337/oil-git.nvim',

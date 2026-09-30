@@ -82,6 +82,7 @@ require('lazy').setup({
     {
       import = 'plugins.editor.oil',
     },
+    { import = 'plugins.editor.suda' },
     {
       import = 'plugins.editor.leetcode',
     },
@@ -143,7 +144,6 @@ require('lazy').setup({
     },
     { import = 'plugins.linting.core' },
     { import = 'plugins.test.core' },
-    { import = 'plugins.test.kulala' },
     {
       import = 'plugins.ui.colorscheme',
     },
