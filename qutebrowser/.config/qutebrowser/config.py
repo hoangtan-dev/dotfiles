@@ -57,7 +57,8 @@ config.bind("T", "hint links tab")
 config.bind("pP", "open -- {primary}")
 config.bind("pp", "open -- {clipboard}")
 config.bind("pt", "open -t -- {clipboard}")
-config.bind("tT", "config-cycle tabs.position top left")
+config.bind("tT", "config-cycle tabs.position top right")
+config.bind("<space>e", "config-cycle tabs.show always never")
 config.bind("gJ", "tab-move +")
 config.bind("gK", "tab-move -")
 config.bind("gm", "tab-move")
@@ -84,7 +85,6 @@ config.bind("<Ctrl-x><Ctrl-e>", "open-editor", "insert")
 
 # Userscript bindings
 config.bind("<space>l", "spawn --userscript localhost")
-config.bind("<space>d", "spawn --userscript dmenu-qutebrowser tab")
 config.bind("gs", "cmd-set-text -s -- :spawn -u -- substiqute")
 config.bind("gS", "cmd-set-text -s -- :spawn -u -- substiqute -t")
 # config.bind("<space><space>", "spawn --userscript dmenu-tabs switch")
@@ -108,10 +108,38 @@ c.qt.args = [
 config.set("window.hide_decoration", True)
 
 # styles, cosmetics
-c.tabs.padding = {"top": 5, "bottom": 5, "left": 9, "right": 9}
-c.tabs.indicator.width = 0  # no tab indicators
-c.tabs.width = "7%"
-c.tabs.select_on_remove = "last-used"
+# Catppuccin Mocha right sidebar.
+c.tabs.position = "right"
+c.tabs.width = 280
+c.tabs.show = "always"
+c.tabs.padding = {"top": 12, "bottom": 12, "left": 12, "right": 12}
+c.fonts.tabs.selected = "12pt default_family"
+c.fonts.tabs.unselected = "12pt default_family"
+c.tabs.indicator.width = 0
+c.tabs.title.alignment = "left"
+c.tabs.title.elide = "right"
+c.tabs.title.format = "{index}  {audio}{current_title}"
+c.tabs.title.format_pinned = "{index}  {current_title}"
+
+c.colors.tabs.bar.bg = "#11111b"
+c.colors.tabs.odd.bg = "#181825"
+c.colors.tabs.even.bg = "#181825"
+c.colors.tabs.odd.fg = "#bac2de"
+c.colors.tabs.even.fg = "#bac2de"
+c.colors.tabs.selected.odd.bg = "#cba6f7"
+c.colors.tabs.selected.even.bg = "#cba6f7"
+c.colors.tabs.selected.odd.fg = "#11111b"
+c.colors.tabs.selected.even.fg = "#11111b"
+c.colors.tabs.pinned.odd.bg = "#1e1e2e"
+c.colors.tabs.pinned.even.bg = "#1e1e2e"
+c.colors.tabs.pinned.odd.fg = "#a6e3a1"
+c.colors.tabs.pinned.even.fg = "#a6e3a1"
+c.colors.tabs.pinned.selected.odd.bg = "#cba6f7"
+c.colors.tabs.pinned.selected.even.bg = "#cba6f7"
+c.colors.tabs.pinned.selected.odd.fg = "#11111b"
+c.colors.tabs.pinned.selected.even.fg = "#11111b"
+
+c.tabs.select_on_remove = "next"
 c.statusbar.padding = {
     "top": 6,
     "bottom": 6,
@@ -121,6 +149,20 @@ c.statusbar.padding = {
 # normal
 c.colors.statusbar.insert.fg = "#9fd4a9"
 c.colors.statusbar.command.fg = "#d8c39a"
+
+# Larger Catppuccin Mocha notification messages.
+c.fonts.messages.info = "13pt default_family"
+c.fonts.messages.warning = "13pt default_family"
+c.fonts.messages.error = "13pt default_family"
+c.colors.messages.info.bg = "#1e1e2e"
+c.colors.messages.info.fg = "#cdd6f4"
+c.colors.messages.info.border = "#cba6f7"
+c.colors.messages.warning.bg = "#1e1e2e"
+c.colors.messages.warning.fg = "#f9e2af"
+c.colors.messages.warning.border = "#f9e2af"
+c.colors.messages.error.bg = "#1e1e2e"
+c.colors.messages.error.fg = "#f38ba8"
+c.colors.messages.error.border = "#f38ba8"
 
 # Content config
 c.content.tls.certificate_errors = (
@@ -154,6 +196,7 @@ load_hint_selectors(config)
 config.bind("<space>c", "hint chat", "normal")
 config.bind("<space>i", "hint inputs", "normal")
 config.bind("<space>y", "hint copy", "normal")
+config.bind("<space>d", "config-cycle colors.webpage.darkmode.enabled")
 
 # Error Messages Handling
 c.content.javascript.log_message.excludes = {
@@ -166,14 +209,6 @@ c.content.javascript.log_message.excludes = {
 c.scrolling.smooth = True
 
 c.fileselect.handler = "default"
-c.qt.environ["QT_QPA_PLATFORMTHEME"] = "xdgdesktopportal"
 
-# Use the Oil portal to choose a folder from the download destination prompt.
-# System Python provides Fedora's PyGObject D-Bus bindings.
-c.downloads.location.prompt = True
-c.fileselect.folder.command = [
-    "/usr/bin/python3",
-    str(config.configdir) + "/pick-folder.py",
-    "{}",
-]
-config.bind("<Ctrl-f>", "prompt-fileselect-external", mode="prompt")
+# YouTube cosmetic tweaks (selectors scoped inside the stylesheet).
+c.content.user_stylesheets = [str(Path(config.configdir) / "styles/youtube-tweaks.css")]
